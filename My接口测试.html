@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>接口测试</title>
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	</head>
+	<body>
+		<div id="container">
+			接口测试：<input type="button" value="/reserveRecord/list" @click="A" />
+			<br><br>
+			接口测试：<input type="button" value="/reserveTime/list" @click="B" />
+			<br><br>
+			接口测试：<input type="button" value="/reserveTime/findByUserid" @click="C" />
+			<br><br>
+			接口测试：<input type="button" value="/reserveTime/setReserve" @click="D" /> 
+			<br>
+			<hr><br>
+			接口测试：<input type="button" value="/student/findall" @click="E" />
+			<br><br>
+			接口测试：<input type="button" value="/student/orderQueryisDangerStudent" @click="F" />
+			<br><br>
+			接口测试：<input type="button" value="/student/findStudentbyuserid" @click="G" />
+			<br>
+			<hr><br>
+			接口测试：<input type="button" value="/upload/uploadExcel" @click="H" />
+			<br>
+			<hr><br>
+			接口测试：<input type="button" value="/reserveTimeDoctor/list" @click="I" />
+			<br><br>
+			接口测试：<input type="button" value="/reserveTimeDoctor/setReserve" @click="J" />
+			<br><br>
+			接口测试：<input type="button" value="/student/findStudentbyuserid" @click="K" />
+		</div>
+	</body>
+	<script>
+		var baseUrl = "http://106.14.201.72:8055/base";
+		
+		var vm = new Vue({
+			el: "#container",
+			methods: {
+				A() {
+					axios.get(baseUrl + "/reserveRecord/list").then(res => {
+						console.log(res.data)
+					});
+				},
+
+				B() {
+					axios.get(baseUrl + "/reserveTime/list").then(res => {
+						console.log(res.data)
+					});
+				},
+
+				C() {
+					axios.post(baseUrl + "/reserveTime/findByUserid", {
+						userid: "202167"
+					}).then(res => {
+						console.log(res.data)
+					});
+				},
+
+				D() {
+					axios.post(
+							baseUrl + "/reserveTime/setReserve", {
+								"reserveId": "45",
+								"studentId": "201926820102",
+								"userId": "202109",
+								"reserveTime": "0",
+								"reserveDay": "2"
+							})
+						.then(res => {
+							console.log(res.data)
+						});
+				},
+
+				E() {
+					axios.get(baseUrl + "/student/findall")
+						.then(res => {
+							console.log(res.data)
+						});
+
+				},
+				F() {
+					axios.post(
+							baseUrl + "/student/orderQueryisDangerStudent", {
+								order: "0000",
+								flag: "2",
+								limit: "5",
+								page: "1",
+								is_danger: "1"
+							})
+						.then(res => {
+							console.log(res.data)
+
+						})
+				},
+				G() {
+					
+					axios.post(
+							baseUrl + "/student/findStudentbyuserid", {
+								user_id: "202101",
+								flag: 2,
+								limit: 5,
+								page: 1,
+
+							})
+						.then(res => {
+							console.log(res.data)
+							console.log(res.data.data)
+						})
+				},
+
+				H() {
+					axios.post(
+						//url
+						baseUrl + "/upload/uploadExcel",
+						//jsondata
+						{
+							students: [{
+								student_name: "B2",
+								student_identityid: "111111222233445555",
+								student_phone: "13753444444",
+								student_id: "2110012966",
+								student_password: "123456",
+								student_age: "45",
+								student_school: "屏峰校区",
+								student_grade: "2021",
+								student_object: "法学院",
+								student_class: "法学2021",
+								student_testresult: null,
+							} ],
+						}
+					).then(res => {
+						console.log(res.data)
+					})
+				},
+				I(){
+					axios.get(baseUrl + "/reserveTimeDoctor/list").then(res => {
+						console.log(res.data)
+					});
+				},
+				J(){
+					axios.post(baseUrl + "/reserveTimeDoctor/setReserve",
+						{
+							studentId:'2110012997',
+							userId:'202107',
+							reserveTime:'0',
+							reserveDay:'2',
+							reserveId:'14',
+						},
+					).then(res => {
+						console.log(res.data)
+					});	
+				},
+				K(){
+					axios.post(baseUrl + "/reserveTime/findByStudentTime",
+						{
+							studentId:'201926820102',
+							reserveWeek:"0"
+						},
+					).then(res => {
+						console.log(res.data)
+					});	
+				}
+
+			}
+		})
+	</script>
+</html>
